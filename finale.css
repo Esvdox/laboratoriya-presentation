@@ -1,0 +1,26 @@
+#future{padding:80px 0 0;border:0}
+.resume-heading h2{font-size:clamp(40px,5vw,72px);letter-spacing:-.045em;margin:0 0 16px;line-height:1.1}
+.resume-heading p{font-size:clamp(18px,2vw,28px);color:#474bff;margin:0 0 36px;line-height:1.4}
+.resume-graphic{margin:0;background:#f7f8fd;border-radius:24px;overflow:hidden}
+.resume-graphic img{display:block;width:100%;height:auto}
+.resume-graphic figcaption{font-size:12px;color:#818799;line-height:1.6;padding:20px 26px;background:#f5f5f7}
+#research{padding-bottom:60px}
+.research-fold summary{cursor:pointer;list-style:none;position:relative;padding-right:190px}
+.research-fold summary::-webkit-details-marker{display:none}
+.research-fold summary .sectionhead{margin:0;gap:12px}
+.research-fold summary h2{font-size:clamp(24px,2.5vw,38px);margin:0}
+.research-fold summary .sectionnum{display:none}
+.research-toggle{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;gap:18px;align-items:center;font-size:12px;color:#474bff}
+.research-toggle b{font-size:30px;line-height:1;font-weight:400;transition:transform .2s}
+.research-fold[open] .research-toggle b{transform:rotate(45deg)}
+.research-fold summary:focus-visible{outline:2px solid #474bff;outline-offset:12px;border-radius:4px}
+.research-content{padding-top:32px}
+.document-actions{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0}
+.document-actions a{font-size:13px;color:#474bff}
+.document-preview{display:block;width:100%;height:68vh;border:1px solid #dde0e8;border-radius:8px;background:#e9e9ee}
+@media(max-width:700px){#future{padding-top:50px}.research-fold summary{padding-right:46px}.research-toggle{font-size:0;gap:0}.research-toggle b{font-size:30px}.resume-graphic{border-radius:14px;overflow-x:auto}.resume-graphic img{min-width:850px;width:850px;max-width:none}.resume-graphic figcaption{position:sticky;left:0;width:calc(100vw - 12vw);box-sizing:border-box;padding:16px 12px;font-size:11px}.resume-heading p{margin-bottom:25px}.document-preview{height:65vh}}
+@media(prefers-reduced-motion:reduce){.research-toggle b{transition:none}}
+/* Separate final presentation screen. */
+footer.closing{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:60px 24px;break-before:page;page-break-before:always}
+footer.closing h2{max-width:1100px;text-wrap:balance}
+@media print{footer.closing{min-height:90vh}}

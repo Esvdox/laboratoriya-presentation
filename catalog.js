@@ -1,0 +1,39 @@
+(() => {
+ const families=window.LABORATORIYA_CATALOG;
+ const grid=document.querySelector('#productCards');
+ const modal=document.querySelector('#detail');
+ let returnFocus=null;
+ const ar=document.createElement('article');
+ ar.className='architecture-offer';
+ ar.innerHTML=`<div><span class="eyebrow">НОВОЕ НАПРАВЛЕНИЕ / ПРОЕКТИРОВАНИЕ</span><h2>Сначала — пространство.<br><span>Затем — заводской комплект.</span></h2><p>Концепции и архитектурные решения для парков, дворов и общественных пространств. От сценария использования — до ведомости изделий и задания производству.</p><button class="catalog-primary" data-architecture>Открыть концепцию и АР</button></div><img src="assets/catalog-park.png" alt="Концептуальная модель парка с игровыми и прогулочными зонами" loading="lazy">`;
+ grid.before(ar);
+ const head=document.createElement('div');head.className='catalog-heading';
+ head.innerHTML='<span class="eyebrow">ПРЕДЛАГАЕМЫЙ ЗАВОДСКОЙ КАТАЛОГ</span><h2>Шесть семейств.<br>Восемнадцать готовых сценариев.</h2><p>Выберите направление. Внутри — три варианта, схемы и состав комплектов.</p><p class="catalog-note">Эскизные предложения к освоению. Артикулы и размеры предварительные; цена, сроки и выпуск подтверждаются после проектирования и проверки производства.</p>';
+ grid.before(head);
+ grid.innerHTML=families.map(f=>`<button type="button" class="catalog-card" data-family="${f.key}" aria-haspopup="dialog"><img src="assets/catalog-${f.key}.png" alt="Концептуальная иллюстрация: ${f.title}" loading="lazy"><span class="catalog-card-body"><span class="code">${f.item} / 3 КОМПЛЕКТАЦИИ</span><strong>${f.title}</strong><span>${f.lead}</span><span class="catalog-open">Выбрать решение <span aria-hidden="true">↗</span></span></span></button>`).join('');
+ const plan=window.LABORATORIYA_CATALOG_PLAN;
+ function openFamily(key,index=0,change=false){
+   const f=families.find(x=>x.key===key);if(!f)return;const v=f.variants[index];if(!v)return;
+   if(!modal.open)returnFocus=document.activeElement;
+   modal.classList.add('catalog-dialog');
+   show(`<div class="catalog-modal-head"><span class="badge">Предлагаемая заводская серия</span><h2>${f.title}</h2><p>${f.lead}</p></div><div class="catalog-tabs" role="group" aria-label="Варианты комплектации">${f.variants.map((a,i)=>`<button data-variant="${i}" data-for="${f.key}" aria-pressed="${i===index}">${a.name}</button>`).join('')}</div><div class="catalog-render variant-render" aria-busy="true"><img src="${v.image}" alt="${f.title}: эскиз комплектации «${v.name}»" width="1536" height="1024"><span><b>${v.name}</b> · ${v.size} · ${v.area}</span></div><div class="catalog-spec" aria-live="polite"><div class="catalog-spec-title"><span class="code">${v.code}</span><h3>${v.name}</h3><p>${v.purpose}</p></div><div class="catalog-metrics"><div><small>Предварительный габарит</small><b>${v.size}</b></div><div><small>Ориентир площади</small><b>${v.area}</b></div><div><small>Позиций в комплекте</small><b>${v.kit.length}</b></div></div><div class="catalog-plan"><div>${plan(f,v)}</div><div><h3>Сценарий пространства</h3><ol>${v.zones.map(z=>`<li>${z}</li>`).join('')}</ol><p class="catalog-note">Схема показывает функциональные связи. Расстановка оборудования, безопасные зоны и привязка к участку уточняются в проекте.</p></div></div><h3>Предварительная ведомость комплекта</h3><div class="catalog-table-wrap"><table class="catalog-table"><thead><tr><th>Артикул</th><th>Заводская позиция</th><th>Кол-во</th></tr></thead><tbody>${v.kit.map(([id,name,q])=>`<tr><td>${id}</td><td>${name}</td><td>${q} шт.</td></tr>`).join('')}</tbody></table></div><div class="catalog-boundary"><h3>Что входит в предложение</h3><p>Указанные изделия и узлы, комплектование и паспорт состава. Материалы, покрытия и исполнения фиксируются в спецификации.</p><p>Подготовка участка, основания, сети, покрытия территории, озеленение, доставка и монтаж рассчитываются отдельно. Для собачьих площадок ограждение рассчитывается по периметру; для шатров и конструкций — нагрузки и крепления по месту установки.</p></div><div class="catalog-actions"><a class="catalog-primary" href="catalog/${v.code}-passport.html" download>Скачать паспорт комплекта</a><a class="catalog-secondary" href="catalog/${v.code}-scheme.svg" download>Скачать схему</a><button class="catalog-secondary" data-item="${f.item}">Проработка направления</button></div><p class="catalog-note">Концепция для обсуждения, не рабочий проект и не подтверждение серийной готовности. Стоимость и срок — после расчёта. Визуализация показывает концепцию выбранного варианта; точные размеры, количество и исполнение элементов определяются ведомостью и проектом.</p></div>`,'КАТАЛОГ / '+v.code);
+   const render=modal.querySelector('.variant-render'),picture=render.querySelector('img');
+   const ready=()=>{render.classList.add('is-ready');render.setAttribute('aria-busy','false');};
+   picture.addEventListener('load',ready,{once:true});
+   picture.addEventListener('error',()=>{render.setAttribute('aria-busy','false');render.querySelector('span').textContent='Не удалось загрузить визуализацию. Обновите страницу.';},{once:true});
+   if(picture.complete&&picture.naturalWidth)ready();
+   for(const option of f.variants)if(option!==v){const preload=new Image();preload.src=option.image;}
+   if(change)modal.querySelector(`[data-variant="${index}"]`).focus({preventScroll:true});
+ }
+ function openArchitecture(){
+   returnFocus=document.activeElement;modal.classList.add('catalog-dialog');
+   show(`<span class="badge">Новое направление / архитектурные решения</span><h2>Концепции и АР<br>парков и пространств</h2><p class="catalog-intro">Продаём не только изделия — предлагаем целостное пространство и комплект для его реализации.</p><img class="architecture-render" src="assets/catalog-park.png" alt="Предлагаемая концепция районного парка"><div class="architecture-stages"><article><span>01 / КОНЦЕПЦИЯ</span><h3>Как живёт пространство</h3><p>Аудит участка, аудитории и сценарии, функциональное зонирование, маршруты, эскизный план, образы и визуализации.</p><b>Результат: альбом концепции</b></article><article><span>02 / АР</span><h3>Как устроено решение</h3><p>В согласованном объёме: планы, фасады и разрезы павильонов и навесов, материалы, цветовые решения, ведомости элементов и узлы сопряжения.</p><b>Результат: комплект архитектурных решений</b></article><article><span>03 / КОМПЛЕКТАЦИЯ</span><h3>Что выпускает завод</h3><p>Подбор типовых серий, реестр артикулов, количества, индивидуальные элементы, границы кооперации и задание конструкторам.</p><b>Результат: ведомость заводского заказа</b></article></div><div class="catalog-boundary"><h3>Что согласуем до старта</h3><p>Границы участка, исходные данные, бюджетный ориентир, сценарии использования, состав проектной документации и ответственность смежных специалистов. АР здесь означает архитектурные решения.</p><p>Генплан, конструктивные расчёты, инженерные сети и рабочая документация на оборудование формируются отдельными согласованными разделами.</p></div><h3>Типовые основы для индивидуального проекта</h3><div class="catalog-actions">${families.slice(0,5).map(f=>`<button class="catalog-secondary" data-family="${f.key}">${f.title}</button>`).join('')}</div>`,'КОНЦЕПЦИЯ → АР → ЗАВОДСКОЙ КОМПЛЕКТ');
+ }
+ document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-family],[data-variant],[data-architecture]');if(!b)return;
+  if(b.hasAttribute('data-architecture'))openArchitecture();
+  else if(b.dataset.family)openFamily(b.dataset.family);
+  else openFamily(b.dataset.for,Number(b.dataset.variant),true);
+ });
+ modal.addEventListener('close',()=>{modal.classList.remove('catalog-dialog');if(returnFocus?.isConnected)returnFocus.focus({preventScroll:true});returnFocus=null;});
+})();
