@@ -43,7 +43,7 @@ const parkDevelopment={
  sources:['factory','vekoma','concept','projects'],
  method:'Реновация и модернизация перенесены из ранее показанной рабочей модели: 500 условных парков, частоты 10% и 5%, чеки 5 и 10 млн ₽. Это непроверенные предпосылки, а не измеренный рынок России. 500 млн ₽ — сумма только двух статей, не всего рынка обновления. Чек реконцепции 5 млн ₽ и 35 закупок в год — предпосылки исходного исследования концепций. Подтверждённых средних чеков замены и расширения нет. Текущее ТО, отдельные ЗИП и восстановительный ремонт учитываются в анализе обслуживания; одинаковые работы в комплексном договоре нельзя считать дважды.'
 };
-data.operations=parkDevelopment;data.upgrade={...parkDevelopment};
+data.operations=aftermarket;data.upgrade={...parkDevelopment};
 
 const serviceRows=items=>items.map(([name,price,market,formula])=>`<article class="service-market-row"><h4>${esc(name)}</h4><dl><div><dt>Чек модели</dt><dd>${esc(price)}</dd></div><div><dt>Ёмкость · база РФ</dt><dd>${esc(market)}</dd></div></dl><details><summary>Расчёт и состав</summary><p>${esc(formula)}</p></details></article>`).join('');
 const rows=items=>'<dl class="market-price-list">'+items.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('')+'</dl>';
