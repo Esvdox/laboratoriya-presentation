@@ -3,14 +3,10 @@
  const grid=document.querySelector('#productCards');
  const modal=document.querySelector('#detail');
  let returnFocus=null;
- const ar=document.createElement('article');
- ar.className='architecture-offer';
- ar.innerHTML=`<div><span class="eyebrow">НОВОЕ НАПРАВЛЕНИЕ / ПРОЕКТИРОВАНИЕ</span><h2>Сначала — пространство.<br><span>Затем — заводской комплект.</span></h2><p>Концепции и архитектурные решения для парков, дворов и общественных пространств. От сценария использования — до ведомости изделий и задания производству.</p><button class="catalog-primary" data-architecture>Открыть концепцию и АР</button></div><img src="assets/catalog-park.webp" alt="Концептуальная модель парка с игровыми и прогулочными зонами" loading="lazy">`;
- grid.before(ar);
- const head=document.createElement('div');head.className='catalog-heading';
- head.innerHTML='<span class="eyebrow">ПРЕДЛАГАЕМЫЙ ЗАВОДСКОЙ КАТАЛОГ</span><h2>Шесть семейств.<br>Восемнадцать готовых сценариев.</h2><p>Выберите направление. Внутри — три варианта, схемы и состав комплектов.</p><p class="catalog-note">Эскизные предложения к освоению. Артикулы и размеры предварительные; цена, сроки и выпуск подтверждаются после проектирования и проверки производства.</p>';
+ const head=document.createElement('div');head.className='catalog-heading';head.id='factory-catalog';
+ head.innerHTML='<span class="eyebrow">ПРЕДЛАГАЕМЫЙ ЗАВОДСКОЙ КАТАЛОГ</span><h2>Пять семейств.<br>Стандартные и индивидуальные решения.</h2><p>Выберите направление. Внутри — три варианта, схемы и состав комплектов.</p><p class="catalog-note">Эскизные предложения к освоению. Артикулы и размеры предварительные; цена, сроки и выпуск подтверждаются после проектирования и проверки производства.</p>';
  grid.before(head);
- grid.innerHTML=families.map(f=>`<button type="button" class="catalog-card" data-family="${f.key}" aria-haspopup="dialog"><img src="assets/catalog-${f.key}.png" alt="Концептуальная иллюстрация: ${f.title}" loading="lazy"><span class="catalog-card-body"><span class="code">${f.item} / 3 КОМПЛЕКТАЦИИ</span><strong>${f.title}</strong><span>${f.lead}</span><span class="catalog-open">Выбрать решение <span aria-hidden="true">↗</span></span></span></button>`).join('');
+ grid.innerHTML=families.filter(f=>f.key!=="park").map(f=>`<button type="button" class="catalog-card" data-family="${f.key}" aria-haspopup="dialog"><img src="assets/catalog-${f.key}.webp" alt="Концептуальная иллюстрация: ${f.title}" loading="lazy"><span class="catalog-card-body"><span class="code">${f.item} / 3 КОМПЛЕКТАЦИИ</span><strong>${f.title}</strong><span>${f.lead}</span><span class="catalog-open">Выбрать решение <span aria-hidden="true">↗</span></span></span></button>`).join('');
  const plan=window.LABORATORIYA_CATALOG_PLAN;
  function openFamily(key,index=0,change=false){
    const f=families.find(x=>x.key===key);if(!f)return;const v=f.variants[index];if(!v)return;
