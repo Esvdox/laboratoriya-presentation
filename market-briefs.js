@@ -140,7 +140,7 @@ function canonicalMarket(key,d,examples,deals){
  const previous=host.innerHTML;
  const archive=document.createElement('div');archive.innerHTML=previous;
  archive.querySelectorAll('#market-title,.market-date').forEach(e=>e.remove());
- const cards=[...archive.querySelectorAll('.market-macro')];
+ const cards=[...archive.querySelectorAll('.market-macro')].filter(card=>key!=='sport'||card.textContent.includes('Бюджет оборудования'));
  const compact=cards.length?'<div class="canon-budgets">'+cards.map(card=>`<article><h4>${card.querySelector('h3,h4')?.innerHTML||''}</h4>${card.querySelector('strong')?.outerHTML||''}${[...card.querySelectorAll('p,a')].filter(e=>!e.parentElement.closest('p')).map(e=>e.outerHTML).join('')}</article>`).join('')+'</div>':`<strong>${esc(d.price)}</strong><p>${esc(d.priceNote)}</p>${d.prices?rows(d.prices):''}${d.serviceRows?serviceRows(d.serviceRows):''}`;
  const scope=key==='shelter'?'Продажа шатров до 100, 100–500, 500–1 000 и более 1 000 м²; оснащение, аренда и обслуживание считаются отдельно.':d.what||d.buyers;
  const size=key==='kids'?'≈ 40 млрд ₽ · оценка участника рынка':d.size;
