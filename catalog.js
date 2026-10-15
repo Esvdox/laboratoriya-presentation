@@ -6,7 +6,7 @@
  const head=document.createElement('div');head.className='catalog-heading';head.id='factory-catalog';
  head.innerHTML='<span class="eyebrow">ПРЕДЛАГАЕМЫЙ ЗАВОДСКОЙ КАТАЛОГ</span><h2>Семь новых семейств.<br>Стандартные и индивидуальные решения.</h2><p>Выберите направление. Внутри — три или четыре варианта, схемы и состав комплектов.</p><p class="catalog-note">Эскизные предложения к освоению. Артикулы и размеры предварительные; цена, сроки и выпуск подтверждаются после проектирования и проверки производства.</p>';
  grid.before(head);
- grid.innerHTML=families.filter(f=>f.key!=="park").map(f=>`<button type="button" class="catalog-card" data-family="${f.key}" aria-haspopup="dialog"><img src="assets/catalog-${f.key}.webp" alt="Концептуальная иллюстрация: ${f.title}" loading="lazy"><span class="catalog-card-body"><span class="code">${f.item} / 3 КОМПЛЕКТАЦИИ</span><strong>${f.title}</strong><span>${f.lead}</span><span class="catalog-open">Выбрать решение <span aria-hidden="true">↗</span></span></span></button>`).join('');
+ grid.innerHTML=families.filter(f=>f.key!=="park").map(f=>`<button type="button" class="catalog-card" data-family="${f.key}" aria-haspopup="dialog"><img src="assets/catalog-${f.key}.webp" alt="Концептуальная иллюстрация: ${f.title}" loading="lazy"><span class="catalog-card-body"><span class="code">${f.item} / ${f.variants.length} КОМПЛЕКТАЦИИ</span><strong>${f.title}</strong><span>${f.lead}</span><span class="catalog-open">Выбрать решение <span aria-hidden="true">↗</span></span></span></button>`).join('');
  const plan=window.LABORATORIYA_CATALOG_PLAN;
  function openFamily(key,index=0,change=false){
    const f=families.find(x=>x.key===key);if(!f)return;const v=f.variants[index];if(!v)return;
