@@ -91,6 +91,14 @@ Object.assign(data.sport,{
  examples:[['Саратовская область · заказчик; 03.03.2025','Договор 347 850 ₽ без НДС','Поставка и установка воркаут-площадки для Марксовского реабилитационного центра. Договор № 2025.32829. Заключение подтверждено судебным актом; поставка не выполнена, взыскивался аванс. Не исполненная закупка.','courtsport'],['Москва · 2026','НМЦК 325,354 млн ₽','Извещение 0373100028126000322: два комплексных объекта. Результат не установлен; не входит в средний чек и подтверждённые закупки.','sportbig']]
 });
 
+Object.assign(data.dogs,{
+ size:'Не установлена',sizeNote:'Россия · годовые продажи оборудования и готовых площадок в рублях не подтверждены. Благоустройство и обслуживание считаются отдельно.',
+ players:'Абрис, КСИЛ, Лебер, ВегаГрупп, МК Спорт, СпортСтройПроект, ПКФ Вертикаль',
+ price:'25 000–154 100 ₽ / изделие',priceNote:'Каталог Абрис: цены отдельных снарядов, не готовой площадки. НДС, доставка, основания, ограждение и монтаж требуют уточнения.',
+ prices:[['Баланс и координация · ступени, балансир, пеньки','25 000–30 000 ₽ / изделие'],['Прыжковые снаряды · колесо, барьер, трамплин','26 000–73 200 ₽ / изделие'],['Прохождение маршрута · лабиринт, бум-горка, бум','28 000–72 000 ₽ / изделие'],['Дрессировочная вышка','154 100 ₽ / изделие'],['Полная площадка с благоустройством · отдельный контракт','3 114 057,36 ₽ / объект']],
+ confirmed:[{place:'ХМАО · Нижневартовск · 2025',subject:'Благоустройство площадки для выгула собак «Собака — друг человека»; закупка № 0387300016825000016',amount:'3 114 057,36 ₽',supplier:'Не установлен в доступной карточке; заказчик — МКУ «УКС г. Нижневартовска»',url:'https://zakupki.kontur.ru/category-region/zootovary/nizhnevartovsk'}]
+});
+
 const serviceRows=items=>items.map(([name,price,market,formula])=>`<article class="service-market-row"><h4>${esc(name)}</h4><dl><div><dt>Чек модели</dt><dd>${esc(price)}</dd></div><div><dt>Ёмкость · база РФ</dt><dd>${esc(market)}</dd></div></dl><details><summary>Расчёт и состав</summary><p>${esc(formula)}</p></details></article>`).join('');
 const rows=items=>'<dl class="market-price-list">'+items.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('')+'</dl>';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -111,10 +119,10 @@ function conceptDetail(d){return `<h2 id="market-title">${esc(d.title)}</h2>
 
 function open(key,button){
  const d=data[key];if(!d)return;trigger=button;
- const confirmed=key==='kids'?[
+ const confirmed=d.confirmed||(key==='kids'?[
   {place:'Санкт-Петербург · 07.04.2026',subject:'Игровое и спортивное оборудование, уличная мебель; поставка и размещение',amount:'5 308 646 ₽',supplier:'ООО «Торговый дом КСИЛ»',url:'https://vsem-podryad.ru/purchase/f2c91ed0-b621-43a6-afec-62a4f702aca4/'},
   {place:'Магадан · 21.05.2026',subject:'Поставка детского игрового оборудования для МКУ «Комбинат зелёного хозяйства»',amount:'5 583 103,99 ₽',supplier:'АО «КСИЛ»',url:'https://vsem-podryad.ru/purchase/49ed8cd4-be20-4d69-97b0-d6cf3247a6fb/'}
- ]:[];
+ ]:[]);
  const examples=(d.examples||[]).map(([name,value,note,source])=>`<article class="market-case"><h4>${esc(name)}</h4><strong>${esc(value)}</strong><p>${esc(note)}</p>${refs[source]?`<a href="${esc(refs[source][1])}" target="_blank" rel="noopener noreferrer">Источник ↗</a>`:''}</article>`).join('');
  const marketSize=key==='kids'?'≈ 40 млрд ₽':d.size;
  const sizeCaption=key==='kids'?'Россия · оценка «Лебер Групп», опубликована в августе 2026 года. Независимая оценка не подтверждена.':d.sizeNote;
@@ -127,7 +135,7 @@ function open(key,button){
  <section class="market-kpi"><h3>Ёмкость рынка</h3><strong class="market-number">${esc(marketSize)}</strong><p>${esc(sizeCaption)}</p>${key==='kids'?`<a href="https://monocle.ru/monocle/2026/37/detskiye-ploschadki-dlya-zharkikh-stran/amp/" target="_blank" rel="noopener noreferrer">Источник оценки ↗</a>`:''}</section>
  </div>
  <section class="market-players"><h3>Основные игроки</h3><div class="market-player-list">${playerList.filter(Boolean).map(x=>`<span>${esc(x)}</span>`).join('')}</div></section>
- <section class="market-purchases"><h3>Подтверждённые закупки ${confirmed.length?`· ${confirmed.length} контракта`:''}</h3>${deals||'<p>В текущем исследовании подтверждённые контракты с проверенной суммой не выделены.</p>'}${confirmed.length?'<p class="market-evidence-note">Заключение контрактов и суммы указаны в карточках агрегатора. Исполнение и оплата не проверены. Составы заказов различаются: средний чек по ним не рассчитываем.</p>':''}</section>
+ <section class="market-purchases"><h3>Подтверждённые закупки ${confirmed.length?`· ${confirmed.length} ${confirmed.length===1?'контракт':'контракта'}`:''}</h3>${deals||'<p>В текущем исследовании подтверждённые контракты с проверенной суммой не выделены.</p>'}${confirmed.length?'<p class="market-evidence-note">Заключение контрактов и суммы указаны в карточках агрегатора. Исполнение и оплата не проверены. Составы заказов различаются: средний чек по ним не рассчитываем.</p>':''}</section>
  <details class="market-method"><summary>Границы рынка, расчёты и ценовые примеры</summary><p><b>Что покупают.</b> ${esc(d.what||d.buyers)}</p><p><b>Покупатели.</b> ${esc(d.buyers)}</p><p>${esc(d.sizeNote)}</p>${d.scenario?`<p>${esc(d.scenario)}</p>`:''}${d.macroBlocks?`<div class="market-macro-grid">${d.macroBlocks.map(([name,market,budget,count,scope])=>`<article class="market-macro"><h4>${esc(name)}</h4><strong>${esc(market)}</strong><p>${esc(budget)} · ${esc(count)}</p><p>${esc(scope)}</p></article>`).join('')}</div>`:''}${examples}<p><b>Наше предложение.</b> ${esc(d.take)}</p></details>
  ${d.detailHtml?`<details class="market-full"><summary>Полное исследование</summary>${d.detailHtml}</details>`:''}
  <details class="market-sources"><summary>Все источники</summary>${d.sources.filter(k=>refs[k]).map(k=>`<a href="${esc(refs[k][1])}" target="_blank" rel="noopener noreferrer">${esc(refs[k][0])} ↗</a>`).join('')||'<p>Источники ещё не добавлены.</p>'}</details>`;
