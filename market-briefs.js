@@ -89,6 +89,16 @@ let trigger=null,priorOverflow='';
 const close=()=>panel.close();panel.querySelector('button').addEventListener('click',close);
 panel.addEventListener('click',e=>{if(e.target===panel){const r=panel.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close();}});
 panel.addEventListener('close',()=>{document.body.style.overflow=priorOverflow;trigger?.focus({preventScroll:true});});
+
+function conceptDetail(d){return `<h2 id="market-title">${esc(d.title)}</h2>
+<p class="market-date">Россия · материалы исследования 15.10.2026</p>
+<section><h3>Что покупают и за что платят</h3><p>Нарратив и легенда места, тематическая библия, сценарии впечатлений, зонирование, визуальная концепция и мастер-план. Результат — согласованная идея пространства и задание для проектирования, оборудования и оформления.</p><p>Покупатели: ${esc(d.buyers)} Оборудование, рабочее проектирование и строительство оцениваются отдельно по составу договора.</p></section>
+<section><h3>Бюджеты по составу работ</h3><strong>0,5–40 млн ₽ за проект · сценарные ориентиры</strong><p>Коммерческие гипотезы исходного исследования, не средние цены заключённых договоров.</p>${rows(d.prices)}</section>
+<section><h3>Ёмкость рынка · сценарная оценка</h3><strong>0,5–2,5 млрд ₽/год</strong><p>Базовый сценарий — <b>975 млн ₽/год</b>, 297 условных заказов. Включает концепции парков и смежных пространств; самостоятельная ёмкость только нарративов не выделена. Измеренная ёмкость рынка РФ не установлена.</p><h3>Из чего складывается базовая ёмкость</h3>${rows(d.segments)}<p>${esc(d.method)}</p><p>Число проектов и бюджеты — предпосылки модели. Сегменты уже входят в итог и повторно к нему не прибавляются. Продажи оборудования и строительство в расчёт не входят.</p></section>
+<section><h3>Основные игроки</h3><p>${esc(d.players)}</p></section>
+<section><h3>Наше предложение</h3><p>${esc(d.take)}</p></section>
+<details class="market-sources"><summary>Источники и ценовой ориентир</summary><p>G Theme Parks: 2 500 / 3 000 ₽ за м² — тарифы эскизной / рабочей концепции из сохранённого исследования. Разный состав работ; не средний чек рынка и не подтверждение общей ёмкости.</p>${d.sources.filter(k=>refs[k]).map(k=>`<a href="${esc(refs[k][1])}" target="_blank" rel="noopener noreferrer">${esc(refs[k][0])} ↗</a>`).join('')}</details>`;}
+
 function open(key,button){
  const d=data[key];if(!d)return;trigger=button;
  const confirmed=key==='kids'?[
@@ -111,7 +121,7 @@ function open(key,button){
  <details class="market-method"><summary>Границы рынка, расчёты и ценовые примеры</summary><p><b>Что покупают.</b> ${esc(d.what||d.buyers)}</p><p><b>Покупатели.</b> ${esc(d.buyers)}</p><p>${esc(d.sizeNote)}</p>${d.scenario?`<p>${esc(d.scenario)}</p>`:''}${d.macroBlocks?`<div class="market-macro-grid">${d.macroBlocks.map(([name,market,budget,count,scope])=>`<article class="market-macro"><h4>${esc(name)}</h4><strong>${esc(market)}</strong><p>${esc(budget)} · ${esc(count)}</p><p>${esc(scope)}</p></article>`).join('')}</div>`:''}${examples}<p><b>Наше предложение.</b> ${esc(d.take)}</p></details>
  ${d.detailHtml?`<details class="market-full"><summary>Полное исследование</summary>${d.detailHtml}</details>`:''}
  <details class="market-sources"><summary>Все источники</summary>${d.sources.filter(k=>refs[k]).map(k=>`<a href="${esc(refs[k][1])}" target="_blank" rel="noopener noreferrer">${esc(refs[k][0])} ↗</a>`).join('')||'<p>Источники ещё не добавлены.</p>'}</details>`;
- priorOverflow=document.body.style.overflow;document.body.style.overflow='hidden';panel.showModal();panel.scrollTop=0;
+ if(key==='concept')panel.querySelector('#market-content').innerHTML=conceptDetail(d);priorOverflow=document.body.style.overflow;document.body.style.overflow='hidden';panel.showModal();panel.scrollTop=0;
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-market]');if(b)open(b.dataset.market,b);});
 const makeButton=(key,title)=>{const b=document.createElement('button');b.type='button';b.className='market-button';b.dataset.market=key;b.setAttribute('aria-haspopup','dialog');b.setAttribute('aria-controls','market-panel');b.setAttribute('aria-label','Маркетинговый анализ: '+title);b.textContent='Маркетинговый анализ ↗';return b;};
