@@ -15,3 +15,5 @@
 .market-full{margin:24px 0;border-top:1px solid #dce3eb;padding-top:18px}.market-full summary{cursor:pointer;font-weight:650}.market-full .tablewrap{overflow-x:auto}.market-full table{border-collapse:collapse;width:100%;min-width:600px;font-size:13px}.market-full td,.market-full th{padding:10px;border:1px solid #dce3eb;text-align:left;vertical-align:top}.market-full h1{font-size:25px}.market-full a{overflow-wrap:anywhere}
 
 .market-macro-grid{display:grid;gap:16px;margin:20px 0}.market-macro{padding:22px;background:#f2f4ff;border:1px solid #dce0f4;border-radius:16px}.market-macro>strong{font-size:30px;color:#4338ca}.market-macro h3{margin-top:0}.market-macro p{margin:8px 0}
+
+#market-content{min-width:0;overflow-wrap:anywhere}#market-content section,#market-content article{min-width:0;max-width:100%;box-sizing:border-box}#market-content p{white-space:normal;overflow-wrap:anywhere}
