@@ -74,6 +74,19 @@ function open(key,button){const d=data[key];if(!d)return;trigger=button;const ex
 document.addEventListener('click',e=>{const b=e.target.closest('[data-market]');if(b)open(b.dataset.market,b);});
 const makeButton=(key,title)=>{const b=document.createElement('button');b.type='button';b.className='market-button';b.dataset.market=key;b.setAttribute('aria-haspopup','dialog');b.setAttribute('aria-controls','market-panel');b.setAttribute('aria-label','Маркетинговый анализ: '+title);b.textContent='Маркетинговый анализ ↗';return b;};
 ['concept','rides','build','operations','service','upgrade'].forEach((key,i)=>(key==='concept'||key==='upgrade')&&document.querySelector(`#journey-${i+1}>div:last-child`)?.append(makeButton(key,data[key].title)));
+
+const narrativeHost=document.querySelector('#journey-1>div:last-child');
+if(narrativeHost&&!narrativeHost.querySelector('.narrative-example')){
+ const link=document.createElement('a');
+ link.className='market-button narrative-example';
+ link.href='assets/topa-narrative.pdf';
+ link.target='_blank';link.rel='noopener';
+ link.textContent='Пример нарратива ↗';
+ link.setAttribute('aria-label','Пример нарратива: Топа. Долина больших следов (PDF, новая вкладка)');
+ link.style.textDecoration='none';
+ narrativeHost.append(link);
+}
+
 document.querySelectorAll('#productCards>.catalog-card').forEach(card=>{const key=card.dataset.family||card.dataset.parkFamily;if(!data[key])return;const wrap=document.createElement('div');wrap.className='market-catalog-item';card.before(wrap);const link=makeButton(key,data[key].title);link.classList.add('market-catalog-link');wrap.append(card,link);});
 const requestedMarket=new URLSearchParams(location.search).get('market');
 if(requestedMarket&&Object.hasOwn(data,requestedMarket)){
