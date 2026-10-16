@@ -30,3 +30,7 @@
 #productCards .market-catalog-item--ridepark .catalog-open{position:absolute;left:28px;bottom:25px;width:max-content;margin:0;padding:0}
 @media(max-width:700px){#productCards .market-catalog-item--ridepark .catalog-open{left:24px;bottom:24px}}
 @media(max-width:380px){#productCards .market-catalog-item--ridepark .catalog-card-body{padding-bottom:96px}#productCards .market-catalog-item--ridepark .catalog-open{bottom:58px}#productCards .market-catalog-item--ridepark>.market-catalog-link{left:24px;right:auto}}
+
+/* Align the final catalog row from the top, regardless of description length. */
+#productCards .catalog-card:is([data-park-family="ridepark"],[data-spares-family],[data-partner-family]){display:flex;flex-direction:column;justify-content:flex-start}
+#productCards .catalog-card:is([data-park-family="ridepark"],[data-spares-family],[data-partner-family])>img{flex-shrink:0}
