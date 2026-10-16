@@ -7,8 +7,7 @@
  {name:'Сменные узлы',title:'Заменить модуль. Сократить простой.',text:'Прорабатываем обслуживаемые модули, их замену и восстановление. Обменный фонд и условия приёмки возвращаемого узла формируются отдельно для каждой серии.',kit:['Совместимый модуль по спецификации','Подготовка к замене и техническое сопровождение','Восстановление возвращённого узла после диагностики','Обменная поставка — при наличии соответствующей программы'],result:'Продажа сменных модулей, восстановление и обменные программы.'}
  ];
  const wrapper=document.createElement('div');wrapper.className='market-catalog-item';
- wrapper.innerHTML='<button class="catalog-card" type="button" data-spares-family aria-haspopup="dialog"><img src="assets/catalog-spares.webp" alt="Запчасти и сервисные комплекты для аттракционов" loading="lazy"><span class="catalog-card-body"><span class="code">С08 / 4 ФОРМАТА ПОСТАВКИ</span><strong>Запчасти и сервисные комплекты</strong><span>Запчасти, совместимый ЗИП, расходники и сервисные комплекты для собственных аттракционов и оборудования других производителей.</span></span></button><button class="market-button market-catalog-link" type="button" data-market="service" aria-haspopup="dialog">Маркетинговый анализ ↗</button>';
- wrapper.querySelector('.market-catalog-link').style.cssText='position:static;align-self:stretch;text-align:left;padding:0 28px 25px;white-space:normal';
+ wrapper.innerHTML='<button class="catalog-card" type="button" data-spares-family aria-haspopup="dialog"><img src="assets/catalog-spares.webp" alt="Запчасти и сервисные комплекты для аттракционов" loading="lazy"><span class="catalog-card-body"><span class="code">С08 / 4 ФОРМАТА ПОСТАВКИ</span><strong>Запчасти и сервисные комплекты</strong><span>Запчасти, совместимый ЗИП, расходники и сервисные комплекты для собственных аттракционов и оборудования других производителей.</span></span></button>';
  grid.append(wrapper);
  let trigger=null;
  function open(index=0){
