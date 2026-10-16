@@ -7,6 +7,7 @@
  ];
  const wrapper=document.createElement('div');wrapper.className='market-catalog-item';
  wrapper.innerHTML='<button class="catalog-card" type="button" data-spares-family aria-haspopup="dialog"><img src="assets/catalog-spares.webp" alt="Запчасти и сервисные комплекты для аттракционов" loading="lazy"><span class="catalog-card-body"><span class="code">С08 / 3 ФОРМАТА ПОСТАВКИ</span><strong>Запчасти и сервисные комплекты</strong><span>Повторные продажи для уже установленных аттракционов: расходники, комплекты ТО и сменные узлы.</span><span class="catalog-open">Выбрать поставку <span aria-hidden="true">↗</span></span></span></button><button class="market-button market-catalog-link" type="button" data-market="service" aria-haspopup="dialog">Маркетинговый анализ ↗</button>';
+ wrapper.querySelector('.market-catalog-link').style.cssText='position:static;align-self:stretch;text-align:left;padding:0 28px 25px;white-space:normal';
  grid.append(wrapper);
  let trigger=null;
  function open(index=0){
