@@ -201,7 +201,7 @@ if(narrativeHost&&!narrativeHost.querySelector('.narrative-example')){
  narrativeHost.append(link);
 }
 
-document.querySelectorAll('#productCards>.catalog-card').forEach(card=>{const key=card.dataset.family||card.dataset.parkFamily;if(!data[key])return;const wrap=document.createElement('div');wrap.className='market-catalog-item';card.before(wrap);const link=makeButton(key,data[key].title);link.classList.add('market-catalog-link');wrap.append(card,link);});
+document.querySelectorAll('#productCards>.catalog-card').forEach(card=>{const key=card.dataset.family||card.dataset.parkFamily;if(!data[key])return;const wrap=document.createElement('div');wrap.className='market-catalog-item';if(key==='ridepark')wrap.classList.add('market-catalog-item--ridepark');card.before(wrap);const link=makeButton(key,data[key].title);link.classList.add('market-catalog-link');wrap.append(card,link);});
 const requestedMarket=new URLSearchParams(location.search).get('market');
 if(requestedMarket&&Object.hasOwn(data,requestedMarket)){
  const entry=Array.from(document.querySelectorAll('[data-market]')).find(b=>b.dataset.market===requestedMarket);

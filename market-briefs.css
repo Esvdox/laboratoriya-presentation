@@ -24,3 +24,9 @@
 
 /* Unified market format. Scoped so concept/narrative presentation stays unchanged. */
 .market-canon .canon-budgets{display:grid;gap:0}.market-canon .canon-budgets article{padding:20px 0;border-bottom:1px solid #e4e5ea}.market-canon .canon-budgets h4{font-size:15px;margin:0 0 8px;font-weight:550}.market-canon .canon-budgets strong{font-size:23px;color:#252535}.market-canon .canon-budgets p{margin:8px 0;font-size:13px;line-height:1.65}.market-canon .canon-budgets a{font-size:12px;color:#4548c4}.market-canon>section{padding:24px 0}.market-canon .market-number{font-size:28px}.market-canon>.market-method,.market-canon>.market-full,.market-canon>.market-sources{padding:20px 0;margin:0;border-top:1px solid #e4e5ea}.market-canon summary{cursor:pointer}.market-canon .market-sources a{display:block;margin:10px 0;overflow-wrap:anywhere}
+
+/* Keep both ridepark actions on the same baseline, with room for narrow screens. */
+#productCards .market-catalog-item--ridepark .catalog-card-body{padding-bottom:63px}
+#productCards .market-catalog-item--ridepark .catalog-open{position:absolute;left:28px;bottom:25px;width:max-content;margin:0;padding:0}
+@media(max-width:700px){#productCards .market-catalog-item--ridepark .catalog-open{left:24px;bottom:24px}}
+@media(max-width:380px){#productCards .market-catalog-item--ridepark .catalog-card-body{padding-bottom:96px}#productCards .market-catalog-item--ridepark .catalog-open{bottom:58px}#productCards .market-catalog-item--ridepark>.market-catalog-link{left:24px;right:auto}}
